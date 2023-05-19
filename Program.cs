@@ -25,7 +25,7 @@ static async Task StartAnalysisAsync(IHost host)
 
     Console.WriteLine("LVZ Headlines");
 
-    var feed = await FeedReader.ReadAsync("https://www.lvz.de/arc/outboundfeeds/rss/");
+    var feed = await FeedReader.ReadAsync("https://www.lvz.de/arc/outboundfeeds/rss/tags_slug/leipzig/");
 
     Console.WriteLine("Feed Title: " + feed.Title);
     Console.WriteLine("Feed Description: " + feed.Description);
