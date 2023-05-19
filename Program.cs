@@ -1,6 +1,8 @@
 ﻿using System.Security.Cryptography;
 using CodeHollow.FeedReader;
+using Flurl.Http;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualBasic;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => { })
@@ -17,7 +19,9 @@ static string CreateMD5(string input)
 
 static async Task StartAnalysisAsync(IHost host)
 {
-    await Task.CompletedTask;
+    using CancellationTokenSource tokenSource = new();
+
+    Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
 
     Console.WriteLine("LVZ Headlines");
 
@@ -33,6 +37,26 @@ static async Task StartAnalysisAsync(IHost host)
         var md5 = CreateMD5(item.Id + item.PublishingDateString + item.Author + item.Content + item.Description +
                             item.Link + item.Title);
         Console.WriteLine(md5);
+
+        var result = await item.Link.GetStringAsync();
+        var endIndex = result.IndexOf("</h2>", StringComparison.Ordinal);
+        var startIndex = result.Substring(0, endIndex).LastIndexOf('>');
+        var title = result.Substring(startIndex + 1, endIndex - startIndex - 1);
+
+        Directory.CreateDirectory("./MD5");
+        Directory.CreateDirectory("./Title");
+
+        var md5FullPath = Path.Combine("./MD5", CreateMD5(item.Id));
+        await File.WriteAllTextAsync(
+            md5FullPath,
+            md5,
+            tokenSource.Token);
+
+        var titleFullPath = Path.Combine("./Title", CreateMD5(item.Id));
+        await File.WriteAllTextAsync(
+            titleFullPath,
+            title,
+            tokenSource.Token);
     }
 
     Environment.Exit(0);
