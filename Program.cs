@@ -2,7 +2,6 @@
 using CodeHollow.FeedReader;
 using Flurl.Http;
 using Microsoft.Extensions.Hosting;
-using Microsoft.VisualBasic;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => { })
