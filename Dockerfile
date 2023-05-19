@@ -10,7 +10,7 @@ LABEL maintainer="Dominik Herold"
 
 # Label as GitHub action
 LABEL com.github.actions.name="LVZ Headline scraper"
-LABEL com.github.actions.description="Scrapes the Headlinges of LVZ"
+LABEL com.github.actions.description="Scrapes the Headlines of LVZ"
 LABEL com.github.actions.icon="sliders"
 LABEL com.github.actions.color="purple"
 
