@@ -1,0 +1,8 @@
+name: 'LVZ Headline scraper'
+description: 'Scrapes the Headlines of LVZ'
+branding:
+  icon: sliders
+  color: purple
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
