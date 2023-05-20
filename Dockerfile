@@ -1,5 +1,4 @@
-# Set the base image as the .NET 6.0 SDK (this includes the runtime)
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
+FROM mcr.microsoft.com/dotnet/sdk:7.0.101 as build
 WORKDIR /build
 
 COPY . .
@@ -9,7 +8,7 @@ WORKDIR /build
 RUN dotnet restore .
 RUN dotnet publish -c Release --no-restore -o ./out
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS runtime
+FROM mcr.microsoft.com/dotnet/sdk:7.0.101 AS runtime
 WORKDIR /app
 COPY --from=publish /build/out ./
 
