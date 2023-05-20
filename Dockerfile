@@ -9,7 +9,7 @@ WORKDIR /build
 RUN dotnet restore .
 RUN dotnet publish -c Release --no-restore -o ./out
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS runtime
 WORKDIR /app
 COPY --from=publish /build/out ./
 
