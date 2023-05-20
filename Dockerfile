@@ -1,25 +1,17 @@
 # Set the base image as the .NET 6.0 SDK (this includes the runtime)
 FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
-WORKDIR /source
-
-# Copy everything and publish the release (publish implicitly restores and builds)
-COPY *.csproj .
-RUN dotnet restore --use-current-runtime
+WORKDIR /build
 
 COPY . .
-RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
 
-# Label the container
-LABEL maintainer="Dominik Herold"
+FROM build as publish
+WORKDIR /build
+RUN dotnet restore .
+RUN dotnet publish -c Release --no-restore -o ./out
 
-# Label as GitHub action
-LABEL com.github.actions.name="LVZ Headline scraper"
-LABEL com.github.actions.description="Scrapes the Headlines of LVZ"
-LABEL com.github.actions.icon="sliders"
-LABEL com.github.actions.color="purple"
-
-# Relayer the .NET SDK, anew with the build output
-FROM mcr.microsoft.com/dotnet/runtime:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS runtime
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=publish /build/out ./
+COPY --from=build /build/libs/ ./
+
 ENTRYPOINT ["dotnet", "LVZHeadlines.dll"]
