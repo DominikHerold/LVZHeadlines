@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 WORKDIR /source
 
 # Copy everything and publish the release (publish implicitly restores and builds)
-COPY ./LVZHeadlines.csproj .
+COPY *.csproj .
 RUN dotnet restore --use-current-runtime
 
 COPY . .
@@ -19,7 +19,7 @@ LABEL com.github.actions.icon="sliders"
 LABEL com.github.actions.color="purple"
 
 # Relayer the .NET SDK, anew with the build output
-FROM mcr.microsoft.com/dotnet/sdk:6.0
+FROM mcr.microsoft.com/dotnet/runtime:6.0
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT [ "dotnet", "/LVZHeadlines.dll" ]
+ENTRYPOINT ["dotnet", "LVZHeadlines.dll"]
