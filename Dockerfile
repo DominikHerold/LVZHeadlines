@@ -13,4 +13,4 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS runtime
 WORKDIR /app
 COPY --from=publish /build/out ./
 
-ENTRYPOINT ["dotnet", "LVZHeadlines.dll"]
+ENTRYPOINT ["/usr/bin/dotnet", "LVZHeadlines.dll"]
