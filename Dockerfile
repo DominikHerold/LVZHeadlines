@@ -21,5 +21,5 @@ LABEL com.github.actions.color="purple"
 # Relayer the .NET SDK, anew with the build output
 FROM mcr.microsoft.com/dotnet/runtime:6.0
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=build /source/app .
 ENTRYPOINT ["dotnet", "LVZHeadlines.dll"]
