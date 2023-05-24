@@ -25,7 +25,6 @@ static async Task StartAnalysisAsync(IHost host, ActionInputs actionInputs)
     Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
 
     Console.WriteLine(actionInputs.Token);
-    Console.WriteLine(Environment.GetEnvironmentVariable("MY_SECRET"));
 
     Console.WriteLine("LVZ Headlines");
 
