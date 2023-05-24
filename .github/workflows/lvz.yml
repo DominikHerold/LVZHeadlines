@@ -20,5 +20,5 @@ jobs:
       with:
         token: ${{ secrets.TOKEN_SECRET }}
       env:
-        MY_SECRET: 42
+        MY_SECRET: ${{ secrets.TOKEN_SECRET }}
     - uses: stefanzweifel/git-auto-commit-action@v4
