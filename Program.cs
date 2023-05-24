@@ -1,8 +1,6 @@
 ﻿using System.Security.Cryptography;
 using CodeHollow.FeedReader;
-using CommandLine;
 using Flurl.Http;
-using LVZHeadlines;
 using Microsoft.Extensions.Hosting;
 
 using IHost host = Host.CreateDefaultBuilder(args)
@@ -18,13 +16,11 @@ static string CreateMD5(string input)
     return Convert.ToHexString(hashBytes);
 }
 
-static async Task StartAnalysisAsync(IHost host, ActionInputs actionInputs)
+static async Task StartAnalysisAsync(IHost host)
 {
     using CancellationTokenSource tokenSource = new();
 
     Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
-
-    Console.WriteLine(actionInputs.Token);
 
     Console.WriteLine("LVZ Headlines");
 
@@ -69,6 +65,5 @@ static async Task StartAnalysisAsync(IHost host, ActionInputs actionInputs)
     Environment.Exit(0);
 }
 
-var actionInputs = Parser.Default.ParseArguments<ActionInputs>(args).Value;
-await StartAnalysisAsync(host, actionInputs);
+await StartAnalysisAsync(host);
 await host.RunAsync();
