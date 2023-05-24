@@ -18,5 +18,6 @@ jobs:
       id: scraper
       uses: DominikHerold/LVZHeadlines@main
       env:
-        MY_SECRET: ${{ secrets.TOKEN_SECRET }}
+        PUSH_OVER_TOKEN: ${{ secrets.PUSH_OVER_TOKEN }}
+        PUSH_OVER_USER: ${{ secrets.PUSH_OVER_USER }}
     - uses: stefanzweifel/git-auto-commit-action@v4
