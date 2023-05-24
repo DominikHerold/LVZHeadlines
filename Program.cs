@@ -24,43 +24,43 @@ static async Task StartAnalysisAsync(IHost host)
 
     Console.WriteLine("LVZ Headlines");
 
-    //var feed = await FeedReader.ReadAsync("https://www.lvz.de/arc/outboundfeeds/rss/tags_slug/leipzig/");
+    var feed = await FeedReader.ReadAsync("https://www.lvz.de/arc/outboundfeeds/rss/tags_slug/leipzig/");
 
-    //Console.WriteLine("Feed Title: " + feed.Title);
-    //Console.WriteLine("Feed Description: " + feed.Description);
-    //// ...
-    //foreach (var item in feed.Items)
-    //{
-    //    Console.WriteLine(item.Id);
-    //    Console.WriteLine(item.PublishingDateString);
-    //    var md5 = CreateMD5(item.Id + item.PublishingDateString + item.Author + item.Content + item.Description +
-    //                        item.Link + item.Title);
-    //    Console.WriteLine(md5);
+    Console.WriteLine("Feed Title: " + feed.Title);
+    Console.WriteLine("Feed Description: " + feed.Description);
+    // ...
+    foreach (var item in feed.Items)
+    {
+        Console.WriteLine(item.Id);
+        Console.WriteLine(item.PublishingDateString);
+        var md5 = CreateMD5(item.Id + item.PublishingDateString + item.Author + item.Content + item.Description +
+                            item.Link + item.Title);
+        Console.WriteLine(md5);
 
-    //    Directory.CreateDirectory("./MD5");
-    //    Directory.CreateDirectory("./Title");
+        Directory.CreateDirectory("./MD5");
+        Directory.CreateDirectory("./Title");
 
-    //    var id = item.Id.Substring(0, item.Id.LastIndexOf('-'));
-    //    var md5FullPath = Path.Combine("./MD5", CreateMD5(id));
-    //    if (!File.Exists(md5FullPath) || File.ReadAllText(md5FullPath) != md5)
-    //    {
-    //        var result = await item.Link.GetStringAsync();
-    //        var endIndex = result.IndexOf("</h2>", StringComparison.Ordinal);
-    //        var startIndex = result.Substring(0, endIndex).LastIndexOf('>');
-    //        var title = result.Substring(startIndex + 1, endIndex - startIndex - 1);
+        var id = item.Id.Substring(0, item.Id.LastIndexOf('-'));
+        var md5FullPath = Path.Combine("./MD5", CreateMD5(id));
+        if (!File.Exists(md5FullPath) || File.ReadAllText(md5FullPath) != md5)
+        {
+            var result = await item.Link.GetStringAsync();
+            var endIndex = result.IndexOf("</h2>", StringComparison.Ordinal);
+            var startIndex = result.Substring(0, endIndex).LastIndexOf('>');
+            var title = result.Substring(startIndex + 1, endIndex - startIndex - 1);
 
-    //        await File.WriteAllTextAsync(
-    //            md5FullPath,
-    //            md5,
-    //            tokenSource.Token);
+            await File.WriteAllTextAsync(
+                md5FullPath,
+                md5,
+                tokenSource.Token);
 
-    //        var titleFullPath = Path.Combine("./Title", CreateMD5(id));
-    //        await File.WriteAllTextAsync(
-    //            titleFullPath,
-    //            title,
-    //            tokenSource.Token);
-    //    }
-    //}
+            var titleFullPath = Path.Combine("./Title", CreateMD5(id));
+            await File.WriteAllTextAsync(
+                titleFullPath,
+                title,
+                tokenSource.Token);
+        }
+    }
 
     Environment.Exit(0);
 }
