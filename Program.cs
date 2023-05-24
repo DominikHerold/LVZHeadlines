@@ -24,6 +24,10 @@ static async Task StartAnalysisAsync(IHost host, ActionInputs actionInputs)
 
     Console.CancelKeyPress += delegate { tokenSource.Cancel(); };
 
+    var test = actionInputs.Token;
+    var test2 = Environment.GetEnvironmentVariable("MY_SECRET");
+    if (test2 == "42")
+        Console.WriteLine("yes");
     Console.WriteLine(actionInputs.Token);
     Console.WriteLine(Environment.GetEnvironmentVariable("MY_SECRET"));
 
