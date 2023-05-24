@@ -17,4 +17,6 @@ jobs:
     - name: Scraper
       id: scraper
       uses: DominikHerold/LVZHeadlines@main
+      with:
+        token: MySecret
     - uses: stefanzweifel/git-auto-commit-action@v4
