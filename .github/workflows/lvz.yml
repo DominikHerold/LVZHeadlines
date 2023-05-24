@@ -17,8 +17,6 @@ jobs:
     - name: Scraper
       id: scraper
       uses: DominikHerold/LVZHeadlines@main
-      with:
-        token: MySecret
       env:
         MY_SECRET: ${{ secrets.TOKEN_SECRET }}
     - uses: stefanzweifel/git-auto-commit-action@v4
