@@ -72,8 +72,15 @@ static async Task StartAnalysisAsync(IHost host)
 
             if (!string.IsNullOrEmpty(oldTitle) && oldTitle != title)
             {
+                var diffHelper = new HtmlDiff.HtmlDiff(oldTitle, title);
+                var output = diffHelper.Build();
+                output = output.Replace("</ins>", "</font>").Replace("</del>", "</font>")
+                    .Replace("<del class='diffmod'>", "<font color=\"#e70000\">")
+                    .Replace("<del class='diffdel'>", "<font color=\"#e70000\">")
+                    .Replace("<ins class='diffmod'>", "<font color=\"#00e700\">")
+                    .Replace("<ins class='diffins'>", "<font color=\"#00e700\">");
                 var client = new HttpClient();
-                var toSend = $"token={pushOverToken}&user={pushOverUser}&message={oldTitle} ➡️ {title}";
+                var toSend = $"token={pushOverToken}&user={pushOverUser}&message={output}&html=1";
 
                 client.PostAsync("https://api.pushover.net/1/messages.json",
                         new StringContent(toSend, Encoding.UTF8, "application/x-www-form-urlencoded")).GetAwaiter()
