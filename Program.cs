@@ -78,7 +78,8 @@ static async Task StartAnalysisAsync(IHost host)
                     .Replace("<del class='diffmod'>", "<font color=\"#e70000\">")
                     .Replace("<del class='diffdel'>", "<font color=\"#e70000\">")
                     .Replace("<ins class='diffmod'>", "<font color=\"#00e700\">")
-                    .Replace("<ins class='diffins'>", "<font color=\"#00e700\">");
+                    .Replace("<ins class='diffins'>", "<font color=\"#00e700\">")
+                    .Replace("&nbsp;", " ");
                 var client = new HttpClient();
                 var toSend = $"token={pushOverToken}&user={pushOverUser}&message={output}&html=1";
 
