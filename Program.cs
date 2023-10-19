@@ -80,6 +80,7 @@ static async Task StartAnalysisAsync(IHost host)
                     .Replace("<ins class='diffmod'>", "<font color=\"#00e700\">")
                     .Replace("<ins class='diffins'>", "<font color=\"#00e700\">")
                     .Replace("&nbsp;", " ");
+                output = $"{output}<br /><br /><a href=\"{item.Link}\">news</a>";
                 var client = new HttpClient();
                 var toSend = $"token={pushOverToken}&user={pushOverUser}&message={output}&html=1";
 
