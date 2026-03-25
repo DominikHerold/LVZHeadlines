@@ -81,7 +81,6 @@ static async Task StartAnalysisAsync(IHost host)
                     .Replace("<ins class='diffins'>", "<font color=\"#00e700\">")
                     .Replace("&nbsp;", " ");
                 output = $"{output}<br /><br /><a href=\"{item.Link}\">news</a>";
-                output = $"{output}<br /><br /><a href=\"https://archive.ph/{item.Link}\">archive</a>";
                 var client = new HttpClient();
                 var toSend = $"token={pushOverToken}&user={pushOverUser}&message={output}&html=1";
 
