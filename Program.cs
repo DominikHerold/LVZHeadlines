@@ -48,7 +48,7 @@ static async Task StartAnalysisAsync(IHost host)
         var md5FullPath = Path.Combine("./MD5", CreateMD5(id));
         if (!File.Exists(md5FullPath) || File.ReadAllText(md5FullPath) != md5)
         {
-            var result = await item.Link.GetStringAsync();
+            var result = await $"{item.Link}?outputType=app".GetStringAsync();
             var endIndex = result.IndexOf("</h2>", StringComparison.Ordinal);
             var startIndex = result.Substring(0, endIndex).LastIndexOf('>');
             var title = result.Substring(startIndex + 1, endIndex - startIndex - 1);
